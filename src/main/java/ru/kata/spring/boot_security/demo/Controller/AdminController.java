@@ -1,0 +1,70 @@
+package ru.kata.spring.boot_security.demo.Controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.kata.spring.boot_security.demo.Service.UserService;
+import ru.kata.spring.boot_security.demo.models.User;
+
+import java.util.List;
+import java.util.Set;
+
+@Controller
+@RequestMapping("/admin")
+public class AdminController {
+
+    private UserService userService;
+
+    @Autowired
+    public AdminController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping("/add")
+    public String add(@RequestParam("lastName") String lastName,
+                      @RequestParam("userName") String userName,
+                      @RequestParam("password") String password,
+                      @RequestParam("age") int age, @RequestParam("roles") Set<String> roles) {
+        userService.add(new User(lastName, userName, password, age), roles);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/add")
+    public String addUser() {
+        return "add-user";
+    }
+
+
+    @GetMapping()
+    public String getAllUsers(Model model) {
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "admin";
+    }
+
+    @GetMapping("/edit")
+    public String edit(@RequestParam("id") Long id, Model model) {
+        User user = userService.findById(id);
+        model.addAttribute("user", user);
+        return "edit-user";
+    }
+
+    @PostMapping("/update")
+    public String update(@RequestParam("id") Long id, @RequestParam("userName") String userName, @RequestParam("lastName") String lastName,
+                         @RequestParam("age") int age) {
+        User user = new User(userName, lastName, age);
+        user.setId(id);
+        userService.update(user);
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/delete")
+    public String delete(@RequestParam("id") Long id) {
+        userService.delete(id);
+        return "redirect:/admin";
+    }
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменить данные</title>
+</head>
+<body>
+<form th:action="@{/admin/update}" method="post">
+
+    <input type="hidden" name="id" th:value="${user.id}">
+
+    <label>Измененить имя:</label>
+    <input type="text" name="userName" th:value="${user.userName}">
+
+    <br><br>
+
+    <label>Измененить фамилию:</label>
+    <input type="text" name="lastName" th:value="${user.lastName}">
+
+    <br><br>
+
+    <label>Измененить возраст:</label>
+    <input type="number" name="age" th:value="${user.age}">
+
+    <br><br>
+
+    <button type="submit">Изменить</button>
+
+</form>
+
+<br>
+
+<a th:href="@{/admin}">Назад к пользователям</a>
+
+</body>
+</html>

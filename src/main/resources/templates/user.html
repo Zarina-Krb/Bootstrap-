@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>userName</th>
+        <th>lastName</th>
+        <th>age</th>
+        <th>roles</th>
+    </tr>
+    <tr>
+        <td th:text="${user.userName}"></td>
+        <td th:text="${user.lastName}"></td>
+        <td th:text="${user.age}"></td>
+        <td>
+            <div th:each="role : ${user.roles}">
+                <span th:text="${role.name}"></span>
+            </div>
+        </td>
+    </tr>
+</table>
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
+</body>
+</html>
