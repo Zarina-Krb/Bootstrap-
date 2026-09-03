@@ -21,7 +21,6 @@ public class User implements UserDetails {
     @Column(name = "user_name")
     private String userName;
 
-
     @Column(name = "last_name")
     private String lastName;
 
@@ -31,7 +30,7 @@ public class User implements UserDetails {
     @Column(name = "age")
     private int age;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

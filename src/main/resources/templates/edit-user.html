@@ -1,26 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Изменить данные</title>
 </head>
 <body>
+
+<h1>Изменить данные пользователя</h1>
+
 <form th:action="@{/admin/update}" method="post">
 
     <input type="hidden" name="id" th:value="${user.id}">
 
-    <label>Измененить имя:</label>
+    <label>Изменить имя:</label>
     <input type="text" name="userName" th:value="${user.userName}">
 
     <br><br>
 
-    <label>Измененить фамилию:</label>
+    <label>Изменить фамилию:</label>
     <input type="text" name="lastName" th:value="${user.lastName}">
 
     <br><br>
 
-    <label>Измененить возраст:</label>
+    <label>Изменить возраст:</label>
     <input type="number" name="age" th:value="${user.age}">
+
+    <br><br>
+
+    <label>Изменить пароль:</label>
+    <input type="password" name="password">
+
+    <br><br>
+
+    <label>Роли:</label>
+
+    <input type="checkbox"
+           name="roles"
+           value="ROLE_USER"
+           th:checked="${user.roles.?[name == 'ROLE_USER'].size() > 0}">
+    <label>USER</label>
+
+    <input type="checkbox"
+           name="roles"
+           value="ROLE_ADMIN"
+           th:checked="${user.roles.?[name == 'ROLE_ADMIN'].size() > 0}">
+    <label>ADMIN</label>
 
     <br><br>
 

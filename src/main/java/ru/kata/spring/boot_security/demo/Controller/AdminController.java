@@ -25,11 +25,11 @@ public class AdminController {
     }
 
     @PostMapping("/add")
-    public String add(@RequestParam("lastName") String lastName,
-                      @RequestParam("userName") String userName,
+    public String add(@RequestParam("userName") String userName,
+                      @RequestParam("lastName") String lastName,
                       @RequestParam("password") String password,
                       @RequestParam("age") int age, @RequestParam("roles") Set<String> roles) {
-        userService.add(new User(lastName, userName, password, age), roles);
+        userService.add(userName, lastName, password, age, roles);
         return "redirect:/admin";
     }
 
@@ -54,11 +54,13 @@ public class AdminController {
     }
 
     @PostMapping("/update")
-    public String update(@RequestParam("id") Long id, @RequestParam("userName") String userName, @RequestParam("lastName") String lastName,
-                         @RequestParam("age") int age) {
-        User user = new User(userName, lastName, age);
-        user.setId(id);
-        userService.update(user);
+    public String update(@RequestParam("id") Long id,
+                         @RequestParam("userName") String userName,
+                         @RequestParam("lastName") String lastName,
+                         @RequestParam("password") String password,
+                         @RequestParam("age") int age,
+                         @RequestParam("roles") Set<String> roles) {
+        userService.update(id, userName, lastName, password, age, roles);
         return "redirect:/admin";
     }
 

@@ -18,4 +18,10 @@ public class RoleDaoImpl implements RoleDao {
                 .setParameter("name", name).getSingleResult();
         return role;
     }
+
+    @Override
+    public Role save(Role role) {
+        entityManager.persist(role);
+        return role;
+    }
 }
