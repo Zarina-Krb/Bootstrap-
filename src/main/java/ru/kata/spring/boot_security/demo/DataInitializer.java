@@ -24,7 +24,6 @@ public class DataInitializer implements CommandLineRunner {
     @Transactional
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("DATA INITIALIZER ЗАПУЩЕН");
         Role roleAdmin = new Role("ROLE_ADMIN");
         roleDao.save(roleAdmin);
         Role roleUser = new Role("ROLE_USER");
