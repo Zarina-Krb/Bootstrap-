@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.Controller;
+package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.kata.spring.boot_security.demo.Service.UserService;
+import ru.kata.spring.boot_security.demo.dao.RoleDao;
+import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.models.User;
 
 import java.util.List;
@@ -18,10 +19,12 @@ import java.util.Set;
 public class AdminController {
 
     private UserService userService;
+    private RoleDao roleDao;
 
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleDao roleDao) {
         this.userService = userService;
+        this.roleDao = roleDao;
     }
 
     @PostMapping("/add")
@@ -33,24 +36,13 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/add")
-    public String addUser() {
-        return "add-user";
-    }
-
 
     @GetMapping()
     public String getAllUsers(Model model) {
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
+        model.addAttribute("allRoles", roleDao.findAll());
         return "admin";
-    }
-
-    @GetMapping("/edit")
-    public String edit(@RequestParam("id") Long id, Model model) {
-        User user = userService.findById(id);
-        model.addAttribute("user", user);
-        return "edit-user";
     }
 
     @PostMapping("/update")
