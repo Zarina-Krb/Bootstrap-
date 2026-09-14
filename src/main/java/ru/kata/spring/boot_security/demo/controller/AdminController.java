@@ -3,10 +3,7 @@ package ru.kata.spring.boot_security.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.models.User;
@@ -19,12 +16,11 @@ import java.util.Set;
 public class AdminController {
 
     private UserService userService;
-    private RoleDao roleDao;
+
 
     @Autowired
-    public AdminController(UserService userService, RoleDao roleDao) {
+    public AdminController(UserService userService) {
         this.userService = userService;
-        this.roleDao = roleDao;
     }
 
     @PostMapping("/add")
@@ -41,7 +37,7 @@ public class AdminController {
     public String getAllUsers(Model model) {
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
-        model.addAttribute("allRoles", roleDao.findAll());
+        model.addAttribute("allRoles", userService.getAllRoles());
         return "admin";
     }
 

@@ -51,6 +51,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Role> getAllRoles() {
+        return roleDao.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public User findById(Long id) {
         return userDao.findById(id);
     }

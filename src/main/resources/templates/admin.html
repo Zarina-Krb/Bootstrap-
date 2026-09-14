@@ -24,7 +24,9 @@
 
             with roles:
 
-            <span sec:authentication="authorities"></span>
+            <span th:each="authority : ${#authentication.authorities}"
+                  th:text="${#strings.replace(authority.authority, 'ROLE_', '')}">
+</span>
 
         </span>
 
